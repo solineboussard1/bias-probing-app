@@ -1,0 +1,14 @@
+pandas
+numpy
+scikit-learn
+nltk
+sentence-transformers
+torch
+transformers
+numpy>=1.21.0
+scipy>=1.7.0
+requests
+python-json-logger
+typing
+gensim>=4.0.0
+huggingface_hub[hf_xet]
