@@ -6,27 +6,25 @@ This tool is a dynamic analysis tool designed to help users understand the sensi
 
 ### Key Capabilities
 
-- **Prompt Generation**
-  Dynamically builds queries based on a combination of user-selected parameters, such as primary issues, recommended patterns, and demographic details. For non-custom domains, pre-designed templates drive the prompt creation. When the custom domain is chosen, users supply propmts and relevant information.
-- **Model Integration**
-  Supports multiple providers (OpenAI, Anthropic, HuggingFace, Deepseek, Mistral) by mapping each chosen model to its respective API. 
+- **Prompt Generation:**
+  Dynamically builds queries based on a combination of user-selected parameters, such as perspective, question type, and demographic details. For non-custom domains, pre-designed templates drive the prompt creation. When the custom domain is chosen, users supplies prompts and relevant information.
+- **Model Integration:**
+  Supports multiple providers (OpenAI, Anthropic, HuggingFace, Deepseek, Mistral) by mapping each chosen model through the users API keys. 
 - **Concept Extraction and Batch Processing:**  
-  Leverages a complex pipeline that collects responses and groups these responses based on demographic segments. This multi-step extraction process supports:
-  - **LLM-based extraction:** Quickly extracts relevant concepts from responses.
+  Leverages pipeline collects responses and groups these responses based on demographic segments. Then multiple machine learning techniques are run to analyze the text including: 
+  - **LLM-based extraction:** Extracts relevant concepts from responses.
   - **Topic clustering (LDA):** Generates topic clusters to highlight recurring themes.
-  - **Embeddings extraction:** Analyzes response relationships for deeper insights.
-- **Result Aggregation and Storage:**  
-  The tool aggregates all responses, associated metadata, and computed insights into a final analysis result. This includes summarizing the number of prompts generated, capturing demographic details, and generating a unique timestamped record for easy reference and download.
+  - **Embeddings extraction:** Analyzes semantic response relationships for deeper insights.
 
 ## How to Use the Tool
 ### 1. Configure Your Analysis
 
 1. **Select a Model & Domain**  
    - Choose from supported models (e.g., GPT variants, Claude, Mistral).  
-   - Pick a domain: _healthcare_, _finance_, _education_ or **custom**.
+   - Pick a domain: healthcare_, finance_, education_ or custom.
 
 2. **Define Parameters**  
-   - ​For pre‑defined domains: select primary issues, recommendation patterns, baseline templates, perspectives (First/Third/Hypothetical), demographic filters (gender, age, ethnicity, socioeconomic), question types (Open‑Ended, True/False, Multiple Choice), and relevance options (Relevant/Irrelevant).  
+   - ​For pre‑defined domains: select primary issues, question types (Open‑Ended, True/False, Multiple Choice), relevance options (Relevant/Irrelevant), recommendation patterns (if true/false or multiple choice is selected), relevant statements (if relevant category is selected) demographic filters (gender, age, ethnicity, socioeconomic).
    - ​For **custom** domain: you’ll upload your own prompts (see next step).
 
 3. **Upload Your Own Prompts (Custom Domain only)**  
@@ -47,7 +45,7 @@ This tool is a dynamic analysis tool designed to help users understand the sensi
        ],
        "relevantStatements": [
          "I feel overwhelmed at work.",
-         "They believe anxiety affects performance."
+         "I take medication for anxiety."
        ]
      }
      ```
@@ -56,13 +54,13 @@ This tool is a dynamic analysis tool designed to help users understand the sensi
 ### 2. Start the Analysis
 
 - **Initiate the Pipeline:**  
-  Once your settings are configured, trigger the analysis. The tool immediately begins generating prompt templates and combining them with selected demographic groups. This results in the creation of a diverse set of prompts to be sent to the underlying models.
+  Once your settings are configured, trigger the analysis. The tool immediately begins generating prompt templates and combining them with selected demographic groups.
 
 - **Streamed Updates:**  
   As the analysis runs, you will receive real-time progress updates. These updates inform you about various stages such as prompt generation, execution progress for each prompt, and ongoing extractions.
 
 - **Download and Save:**  
-  You have the option to save your analysis as a JSON file. This not only archives the complete results for offline review but also allows you to reload the analysis later for further investigation or to share with others.
+  You have the option to save your analysis as a JSON file. This allows you to review the data and reload the analysis later for further investigation.
 
 
 ### 3. Understanding Your Results
@@ -93,9 +91,9 @@ This tab applies Latent Dirichlet Allocation (LDA) to statistically infer topics
 - Visualizations show topic proportions across the dataset and per demographic group.
 
 **Use this tab to:**
-- Reveal hidden patterns in the language that may not be captured by surface-level concept extraction.
-- Compare how frequently different demographic groups are associated with certain statistically derived topics.
-- Investigate whether any topics are disproportionately associated with identity-based language or sensitive terms.
+- Reveal hidden patterns in the language that may not be captured by surface-level concept extraction
+- Compare how frequently different demographic groups are associated with certain statistically derived topics
+- Investigate whether any topics are disproportionately associated with identity-based language or sensitive terms
 
 ---
 
@@ -103,14 +101,13 @@ This tab applies Latent Dirichlet Allocation (LDA) to statistically infer topics
 
 This tab uses sentence embeddings and dimensionality reduction (PCA) to map responses into a 2D space, followed by clustering with K-Means.
 
-- Each point in the scatter plot represents a model response.
-- Colors indicate automatically generated clusters; tooltips reveal response content and demographic metadata.
-- Cluster composition is summarized below the chart.
+- Each point in the scatter plot represents a model response
+- The points are colored by demographic group to reveal potential clustering by demographics
+- Cluster composition is summarized below the chart
 
 **Use this tab to:**
 - Explore how responses are grouped based on semantic similarity.
 - Detect clusters with uneven demographic representation, which may suggest biased response patterns.
-- Drill into representative responses within clusters to examine themes qualitatively.
 
 ---
 
@@ -131,7 +128,7 @@ This tab evaluates how consistent the clustering results are across the three me
 
 ### Conclusion
 
-The Bias Probing Tool is designed to offer a multi-layered understanding of language model behavior across demographic dimensions. Each analytical view—concept extraction, topic modeling, semantic clustering, and agreement scoring—provides a different lens for interpreting model outputs.
+The Bias Probing Tool is designed to offer a multi-layered understanding of language model behavior across demographic dimensions. Each analytical view (concept extraction, topic modeling, semantic clustering, and agreement scoring) provides a different lens for interpreting model outputs.
 
 By examining both the content and the structure of responses, researchers can uncover:
 
@@ -139,4 +136,4 @@ By examining both the content and the structure of responses, researchers can un
 - Recurring or dominant model behaviors
 - Evidence of implicit bias or preferential framing
 
-Together, these tools provide a robust framework for analyzing language model outputs with both breadth and depth.
+This tool provides a robust framework for auditing bias in language model outputs.
